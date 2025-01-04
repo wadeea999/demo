@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شاشة ذكاء الأعمال </title>
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: 'Alexandria', sans-serif;
+            margin: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            font-family: 'Alexandria', sans-serif;
+        }
+        .chart-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two charts per row */
+            gap: 20px;
+            justify-items: center;
+        }
+        canvas {
+        width: 600px; 
+        height: 400px; 	
+    }
+    </style>
+
+</head>
+<body>
+    <h1>شاشة ذكاء الأعمال</h1>
+    <div class="chart-container">
+        <!-- Chart 1 -->
+        <div>
+            <h2>توزيع الطلاب حسب المدارس</h2>
+            <canvas id="chart1"></canvas>
+        </div>
+
+        <!-- Chart 2 -->
+        <div>
+            <h2>إجمالي الطلاب بناءاً على المناطق - حسب الجنس</h2>
+            <canvas id="chart2"></canvas>
+        </div>
+
+        <!-- Chart 3 -->
+        <div>
+            <h2>توزيع الطلب حسب الجوائز</h2>
+            <canvas id="chart3"></canvas>
+        </div>
+
+        <!-- Chart 4 -->
+        <div>
+            <h2>توزيع الطلاب حسب نوع المسابقة</h2>
+            <canvas id="chart4"></canvas>
+        </div>
+    </div>
+
+    <script>
+        
+        function createChart(canvasId, chartData, chartOptions) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: chartOptions,
+            });
+        }
+
+        const commonOptions = {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        font: {
+                            family: 'Alexandria',
+                            size: 12,
+                        },
+                        color: '#000',
+                    },
+                },
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        font: {
+                            family: 'Alexandria',
+                            size: 12,
+                        },
+                        color: '#000',
+                    },
+                },
+            },
+        };
+
+        // Chart 1
+        const data1 = {
+            labels: ['الانجال الأهلية','الانجال المتوسطة','البيان النموذجية','التقوى الاهلية','الثانوية التاسعة عشر'],
+            datasets: [
+                {
+                    type: 'bar',
+                    label: 'إجمالي الطلبة',
+                    data: [60, 15, 10, 90, 130],
+                    backgroundColor: '#8079A8',
+                    borderRadius: 20,
+		    order: 2,
+                },
+            ],
+        };
+	const options1 = {
+            ...commonOptions,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'أسماء المدارس',
+                        font: {
+                            family: 'Alexandria',
+                            size: 14,
+                            weight: 'bold',
+                        },
+                        color: '#000',
+                    },
+		grid: {
+                display: false,
+            		},
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'إجمالي الطلبة',
+                        font: {
+                            family: 'Alexandria',
+                            size: 14,
+                            weight: 'bold',
+                        },
+                        color: '#000',
+                    },
+                    beginAtZero: true,
+                },
+            },
+        };
+
+        // Chart 2
+        const data2 = {
+            labels: ['منطقة الباحة','منطقة مكة المكرمة','منطقة الرياض','منطقة عسير','منطقة القصيم'],
+            datasets: [
+                {
+                    type: 'bar',
+                    label: 'إجمالي الطلبة',
+                    data: [210, 150, 160, 110, 180],
+                    backgroundColor: '#E2A947',
+                    borderRadius: 20,
+		    order: 2,
+                },
+                {
+                    type: 'line',
+                    label: 'بنين',
+                    data: [150, 100, 80, 50, 120],
+                    borderColor: '#4A7FB9',
+                    borderWidth: 2,
+                    hoverBorderWidth: 4,
+                    pointBackgroundColor: '#4A7FB9',
+                    tension: 0.4,
+		    order: 1,
+                },
+			{
+                    type: 'line',
+                    label: 'بنات',
+                    data: [60, 50, 70, 60, 60],
+                    borderColor: '#D14E48',
+                    borderWidth: 2,
+                    hoverBorderWidth: 4,
+                    pointBackgroundColor: '#D14E48',
+                    tension: 0.4,
+		    order: 1,
+                },
+            ],
+        };
+	const options2 = {
+            ...commonOptions,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'اسم المنطقة',
+                        font: {
+                            family: 'Alexandria',
+                            size: 14,
+                            weight: 'bold',
+                        },
+                        color: '#000',
+                    },
+		grid: {
+                display: false,
+            		},
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'إجمالي الطلبة',
+                        font: {
+                            family: 'Alexandria',
+                            size: 14,
+                            weight: 'bold',
+                        },
+                        color: '#000',
+                    },
+                },
+            },
+        };
+
+        // Chart 3
+        const data3 = {
+            labels: ['ميدالية فضية','وسيلة','وكالة الفضاء الأمريكية (ناسا)'],
+            datasets: [
+                {
+                    type: 'bar',
+                    label: 'إجمالي الطلبة',
+                    data: [300, 320, 350],
+                    backgroundColor: '#64A86C',
+                    borderRadius: 20,
+		    order: 2,
+                },
+            ],
+        };
+	const options3 = {
+            ...commonOptions,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'نوع الجائزة',
+                        font: {
+                            family: 'Alexandria',
+                            size: 14,
+                            weight: 'bold',
+                        },
+                        color: '#000',
+                    },
+		grid: {
+                display: false,
+            		},
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'إجمالي الطلبة',
+                        font: {
+                            family: 'Alexandria',
+                            size: 14,
+                            weight: 'bold',
+                        },
+                        color: '#000',
+                    },
+                },
+            },
+        };
+
+        // Chart 4
+        const data4 = {
+            labels: ['أولمبياد الرياضيات الدولي','تحدي الأحياء','كانجارو موهبة','الملتقى العربي الثاني للنشء'],
+            datasets: [
+                {
+                    type: 'bar',
+                    label: 'إجمالي الطلبة',
+                    data: [90, 200, 100, 110],
+                    backgroundColor: '#2B254B',
+                    borderRadius: 20,
+                },
+            ],
+        };
+	const options4 = {
+            ...commonOptions,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'اسم المسابقة',
+                        font: {
+                            family: 'Alexandria',
+                            size: 14,
+                            weight: 'bold',
+                        },
+                        color: '#000',
+                    },
+		grid: {
+                display: false,
+            		},
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'إجمالي الطلبة',
+                        font: {
+                            family: 'Alexandria',
+                            size: 14,
+                            weight: 'bold',
+                        },
+                        color: '#000',
+                    },
+                },
+            },
+        };
+
+        createChart('chart1', data1, options1);
+        createChart('chart2', data2, options2);
+        createChart('chart3', data3, options3);
+        createChart('chart4', data4, options4);
+    </script>
+</body>
+</html>
